@@ -70,7 +70,7 @@ export default function UserInputSection({ setUserInput }) {
         label="Address"
         variant="outlined"
         error={!isAddress(address)}
-        sx={{ width: '43ch' }}
+        sx={{ width: { xs: '15ch', sm: '45ch' } }}
         onChange={e => setAddress(e.target.value)}
       />
 

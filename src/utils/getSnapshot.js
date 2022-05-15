@@ -4,10 +4,8 @@ import BigNumber from 'bignumber.js';
 import config from "./chainConfigs";
 
 export default async function getSnapshot(chain, address, date) {
-    if (chain === undefined || address === undefined || date === undefined) {
-        console.log("Undefined args");
+    if (chain === undefined || address === undefined || date === undefined)
         return null;
-    }
 
     const transfers = await fetchTransfers(chain, address);
     const result = aggregateTransfers(transfers, address, date);

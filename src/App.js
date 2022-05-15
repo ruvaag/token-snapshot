@@ -1,14 +1,12 @@
 import './App.css';
-import moment from 'moment';
 import { useState } from 'react';
 import Header from "./components/Header";
-import Divider from '@mui/material/Divider';
 import UserInputSection from './components/UserInputSection';
 import SnapshotTable from './components/SnapshotTable';
+import SectionDivider from './components/SectionDivider';
 
 
 function App() {
-
     const [input, setInput] = useState({
         "date": undefined,
         "address": undefined,
@@ -19,15 +17,8 @@ function App() {
     return (
         <div className="App">
             <Header />
-
             <UserInputSection setUserInput={setInput} />
-
-            <Divider textAlign="left">
-                Snapshot for <b>{input?.address ?? 'Invalid Address'}</b> on&nbsp;
-                <b>{input?.chainName ?? 'Invalid Chain'}</b> as of&nbsp;
-                <b>{moment.unix(input?.date).format("dddd, MMMM Do YYYY")}</b>
-            </Divider>
-
+            <SectionDivider input={input} />
             <SnapshotTable input={input} />
         </div>
     );
