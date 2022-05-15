@@ -1,26 +1,26 @@
 import axios from 'axios';
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
+import config from "./chainConfigs";
 
-export default async function getSnapshot(address, date) {
-    if (address === undefined || date === undefined) return null;
+export default async function getSnapshot(chain, address, date) {
+    if (chain === undefined || address === undefined || date === undefined) {
+        console.log("Undefined args");
+        return null;
+    }
 
-    const transfers = await fetchTransfers(address);
+    const transfers = await fetchTransfers(chain, address);
     const result = aggregateTransfers(transfers, address, date);
     formatBalances(result);
-    await formatPrices(result);
+    await formatPrices(result, chain);
     sortTokens(result);
 
     return result;
-    // return new Promise((res) => { setTimeout(() => res("Late Text"), 5000) });
 }
 
-async function fetchTransfers(address) {
-    const apiKey = process.env.REACT_APP_ETHERSCAN_API_KEY;
-    const baseUrl = `https://api.etherscan.io/api?module=account&action=tokentx&address=${address}&apikey=${apiKey}`;
-
-    const res = await axios.get(baseUrl);
-    return res.data.result;
+async function fetchTransfers(chain, address) {
+    const res = await axios.get(config[chain].transfersUrl(address));
+    return res.status === 200 ? res.data.result : null;
 }
 
 function aggregateTransfers(transfers, address, date) {
@@ -65,8 +65,8 @@ function formatBalances(arr) {
     })
 }
 
-async function formatPrices(arr) {
-    const baseUrl = "https://api.coingecko.com/api/v3/simple/token_price/ethereum?";
+async function formatPrices(arr, chain) {
+    const baseUrl = `https://api.coingecko.com/api/v3/simple/token_price/${config[chain].cgChainId}?`;
     const args = arr.reduce((res, e) => res.concat(e.address, ','), "");
     const res = await axios.get(`${baseUrl}contract_addresses=${args}&vs_currencies=usd`)
     arr.forEach(e => {

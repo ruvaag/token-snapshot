@@ -9,7 +9,12 @@ import SnapshotTable from './components/SnapshotTable';
 
 function App() {
 
-    const [input, setInput] = useState();
+    const [input, setInput] = useState({
+        "date": undefined,
+        "address": undefined,
+        "chainId": undefined,
+        "chainName": undefined,
+    });
 
     return (
         <div className="App">
@@ -18,8 +23,9 @@ function App() {
             <UserInputSection setUserInput={setInput} />
 
             <Divider textAlign="left">
-                Snapshot for {input?.address ?? 'Invalid Address'} as of&nbsp;
-                {moment.unix(input?.date).format("dddd, MMMM Do YYYY")}
+                Snapshot for <b>{input?.address ?? 'Invalid Address'}</b> on&nbsp;
+                <b>{input?.chainName ?? 'Invalid Chain'}</b> as of&nbsp;
+                <b>{moment.unix(input?.date).format("dddd, MMMM Do YYYY")}</b>
             </Divider>
 
             <SnapshotTable input={input} />
