@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Divider from '@mui/material/Divider';
 import UserInputSection from './components/UserInputSection';
 import SnapshotTable from './components/SnapshotTable';
+import { Typography } from '@mui/material';
 
 
 function App() {
@@ -18,8 +19,8 @@ function App() {
             <UserInputSection setUserInput={setInput} />
 
             <Divider textAlign="left">
-                Snapshot for {input?.address ?? 'Invalid Address'} as of&nbsp;
-                {moment.unix(input?.date).format("dddd, MMMM Do YYYY")}
+                Snapshot for <b>{input?.address ?? 'Invalid Address'}</b> as of&nbsp;
+                <b>{moment.unix(input?.date).format("dddd, MMMM Do YYYY")}</b>
             </Divider>
 
             <SnapshotTable input={input} />
