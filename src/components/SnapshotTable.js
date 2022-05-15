@@ -9,6 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableContainer from '@mui/material/TableContainer';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import { CircularProgress, Link, Typography } from '@mui/material';
+import config from '../utils/chainConfigs';
+
 import getSnapshot from "../utils/getSnapshot";
 
 export default function SnapshotTable({ input }) {
@@ -18,12 +20,10 @@ export default function SnapshotTable({ input }) {
     useEffect(() => {
         (async () => {
             setIsPending(true);
-            setSnapshot(await getSnapshot(input?.address, input?.date));
+            setSnapshot(await getSnapshot(input?.chainId, input?.address, input?.date));
             setIsPending(false);
         })();
-    }, [input?.address, input?.date]);
-
-    const ETHERSCAN = "https://etherscan.io/token/";
+    }, [input?.chainId, input?.address, input?.date]);
 
     return (
         isPending ? <CircularProgress sx={{ m: '20px' }} /> :
@@ -67,9 +67,11 @@ export default function SnapshotTable({ input }) {
                                     {row.value ? `$ ${row.value.toLocaleString("en-US")}` : "NA"}
                                 </TableCell>
                                 <TableCell>
-                                    <Link href={ETHERSCAN + row.address}
+                                    <Link
                                         target="_blank"
-                                        rel="noreferrer">
+                                        rel="noreferrer"
+                                        href={config[input.chainId].explorerUrl(row.address)}
+                                    >
                                         <CallMadeIcon fontSize='medium' />
                                     </Link>
                                 </TableCell>
