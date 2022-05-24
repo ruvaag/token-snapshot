@@ -28,6 +28,12 @@ const config = {
         "cgChainId": "arbitrum-one",
         "transfersUrl": (address) => `https://api.arbiscan.io/api?module=account&action=tokentx&address=${address}&apikey=${process.env.REACT_APP_ARBISCAN_API_KEY}`,
         "explorerUrl": (token) => `https://arbiscan.io/token/${token}`,
+    },
+    "43114": {
+        "name": "Avalanche-C",
+        "cgChainId": "avalanche",
+        "transfersUrl": (address) => `https://api.snowtrace.io/api?module=account&action=tokentx&address=${address}&apikey=${process.env.REACT_APP_SNOWTRACE_API_KEY}`,
+        "explorerUrl": (token) => `https://snowtrace.io/token/${token}`,
     }
 }
 
