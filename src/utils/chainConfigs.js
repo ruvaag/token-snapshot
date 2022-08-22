@@ -34,6 +34,12 @@ const config = {
         "cgChainId": "avalanche",
         "transfersUrl": (address) => `https://api.snowtrace.io/api?module=account&action=tokentx&address=${address}&apikey=${process.env.REACT_APP_SNOWTRACE_API_KEY}`,
         "explorerUrl": (token) => `https://snowtrace.io/token/${token}`,
+    },
+    "250": {
+        "name": "Fantom",
+        "cgChainId": "fantom",
+        "transfersUrl": (address) => `https://api.ftmscan.com/api?module=account&action=tokentx&address=${address}&apikey=${process.env.REACT_APP_FTMSCAN_API_KEY}`,
+        "explorerUrl": (token) => `https://ftmscan.com/token/${token}`,
     }
 }
 
